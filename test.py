@@ -35,7 +35,7 @@ def main():
     model.eval()  # Modeli değerlendirme moduna al
 
     # Kendi yüklediğiniz resmi alıyoruz
-    img_path = 'Ekran görüntüsü 2025-02-01 222530.png'
+    img_path = 'your_image.png'
     img = Image.open(img_path).convert('L')  # Resmi gri tonlamaya dönüştür
 
     # Resmi uygun boyuta getiriyoruz (28x28)
@@ -56,8 +56,8 @@ def main():
     plt.title(f'Predicted: {prediction}')
     plt.show()
 
-# Kodunuzu bu yapı ile sarmalıyoruz
+# Bu kısım sadece Windows'ta gereklidir
 if __name__ == '__main__':
     from multiprocessing import freeze_support
-    freeze_support()  # Bu satır sadece Windows'ta gerekliymiş bilmiyordum
+    freeze_support() 
     main()
