@@ -7,22 +7,25 @@ from PIL import Image
 
 # Ana fonksiyonunuzu oluşturuyoruz
 def main():
-    # Modeli yükleyeceğiz
-    class MYNet(nn.Module):
+    # Modelimizi tekrar yüklüyoruz
+        class MYNet(nn.Module):
         def __init__(self):
             super(MYNet, self).__init__()
-            self.conv = nn.Conv2d(1, 10, 5)
-            self.conv1 = nn.Conv2d(10, 20, 5)
-            self.conv1_drop = nn.Dropout2d()
-            self.fc1 = nn.Linear(320, 50)
-            self.fc2 = nn.Linear(50, 10)
+            self.conv = nn.Conv2d(1, 32, 3, padding=1)
+            self.conv1 = nn.Conv2d(32, 64, 3, padding=1)
+            self.conv2 = nn.Conv2d(64, 128, 3, padding=1)
+            self.fc1 = nn.Linear(128 * 3 * 3, 512)  # Boyutu 128 * 3 * 3 olarak güncellendi
+            self.fc2 = nn.Linear(512, 10)
+            self.dropout = nn.Dropout(0.5)
 
         def forward(self, x):
-            x = F.relu(F.max_pool2d(self.conv(x), 2))
-            x = F.relu(F.max_pool2d(self.conv1_drop(self.conv1(x)), 2))
-            x = x.view(-1, 320)
+            x = F.relu(F.max_pool2d(self.conv(x), 2))  # Boyut: (batch_size, 32, 14, 14)
+            x = F.relu(F.max_pool2d(self.conv1(x), 2))  # Boyut: (batch_size, 64, 7, 7)
+            x = F.relu(F.max_pool2d(self.conv2(x), 2))  # Boyut: (batch_size, 128, 3, 3)
+
+            x = x.view(-1, 128 * 3 * 3)  # Düzleştir
             x = F.relu(self.fc1(x))
-            x = F.dropout(x, training=self.training)
+            x = self.dropout(x)
             x = self.fc2(x)
             return F.log_softmax(x, dim=1)
 
