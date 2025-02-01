@@ -1,3 +1,4 @@
+# Gerekli kütüphaneleri ekliyoruz
 import torch
 from torch import nn, optim
 from torchvision import datasets, transforms
@@ -36,6 +37,7 @@ def train(model, device, train_loader, optimizer, epoch):
     total = 0
 
     for batch_idx, (data, target) in enumerate(train_loader):
+        # Hızlandırma çalışmaları
         data, target = data.to(device), target.to(device)
 
         optimizer.zero_grad()  # Önceki gradyanları sıfırla
@@ -58,11 +60,11 @@ def train(model, device, train_loader, optimizer, epoch):
 # Test fonksiyonu
 def test(model, device, test_loader):
     model = model.to(device)
-    model.eval()  # Modeli değerlendirme moduna aldım
+    model.eval()  # Modeli değerlendirme moduna alıyoruz
     test_loss = 0
     correct = 0
 
-    with torch.no_grad():  # Değerlendirme sırasında gradyan hesaplaması yapılmaz
+    with torch.no_grad():  # Değerlendirme sırasında gradyan hesaplaması yapılmamalı
         for data, target in test_loader:
             data, target = data.to(device), target.to(device)
             output = model(data)
@@ -81,24 +83,24 @@ def main():
     # Veri dönüştürme işlemleri
     transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize((0.5,), (0.5,))  # Normalizasyon
+        transforms.Normalize((0.13,), (0.13,))  # Standart MNIST Normalizasyonu
     ])
 
     # MNIST veri setini indirme ve yükleme
     train_dataset = datasets.MNIST('./data', train=True, download=True, transform=transform)
     test_dataset = datasets.MNIST('./data', train=False, download=True, transform=transform)
 
-    train_loader = DataLoader(train_dataset, batch_size=256, shuffle=True, num_workers=8, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=256, shuffle=False, num_workers=8)
+    train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=8)# Kendi işlem gücünüze göre Worker sayısını ve batch boyutunu değiştirebilirsiniz.
+    test_loader = DataLoader(test_dataset, batch_size=128, shuffle=False, num_workers=8)
 
     # Modeli başlat
     model = MYNet().to(device)
 
-    # Optimizatör(Adam daha iyi diye gözlemledim)
+    # Optimizatör
     optimizer = optim.Adam(model.parameters(), lr=0.001)
 
     # Eğitim döngüsü
-    for epoch in range(1, 11): # 10 epoch için train eiyoruz
+    for epoch in range(1, 11): # 10 epoch için train ediyoruz
         train(model, device, train_loader, optimizer, epoch)  # Eğitim fonksiyonunu çağır
         test(model, device, test_loader)  # Test fonksiyonunu çağır
 
