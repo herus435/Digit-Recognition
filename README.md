@@ -1,6 +1,6 @@
 # Digit-Recognition
 MNIST Rakam Tanıma için "Filtreleme" Sinir Ağı (CNN) Modeli
-Bu kod, PyTorch kullanarak MNIST rakam veri setini sınıflandırmak için basit bir "Filtreleme" Sinir Ağı (FNN) modeli uygulamaktadır.
+Bu kod, PyTorch kullanarak MNIST rakam veri setini sınıflandırmak için basit bir Convolutional Neural Networks(CNN) modeli uygulamaktadır.
 
 ## Gereksinimler
 Python 3.x (Bu projede 3.12 kullanılmıştır!)
