@@ -20,3 +20,7 @@ Yapmanız gereken (img_path = 'your_image.png') kısmına kendi png dosya yolunu
 Yüklediğiniz resim dosyasında rakamın arka planının temiz ve beyaz olmasına,  
 Rakam harici birşeyin bulunmamasına,  
 Kenar boşluklarının yeterince bırakılmış olmasına dikkat edin lütfen.  
+Her kod bloğunun sonunda Windows işletim sistemine özel bir kısım vardır.  
+Linux kullanıcıları o kısmı silebilir.  
+Performans ayarlarını kendi donanımınıza göre ayarlayabilirsiniz.  
+
