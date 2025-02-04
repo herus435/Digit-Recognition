@@ -42,6 +42,7 @@ def train(model, device, train_loader, optimizer, epoch):
         output = model(data)  # Modelin tahmini
         loss = F.nll_loss(output, target)  # Kayıp hesaplama
         loss.backward()  # Geri yayılım
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)  # Gradyanları 1.0 maksimum norm ile kırp
         optimizer.step()
 
         running_loss += loss.item()  # Toplam kaybı güncelle
