@@ -1,26 +1,40 @@
 # Digit-Recognition
-MNIST Rakam Tanıma için  Convolutional Neural Networks (CNN) Modeli  
-Bu kod, PyTorch kullanarak MNIST rakam veri setini sınıflandırmak için (CNN) modeli uygulamaktadır.  
+MNIST Rakam Tanıma için Evrişimli Sinir Ağları (CNN) Modeli
+Bu kod, PyTorch kullanarak MNIST rakam veri setini sınıflandırmak için bir CNN modeli uygular.
 
 ## Gereksinimler
-Python 3.x (Bu projede 3.12 kullanılmıştır!)  
-PyTorch kütüphanesi (pytorch)(2.5.1)  
-Numpy kütüphanesi (numpy)(1.26.4)  
+- Python 3.x
+- Gerekli kütüphaneler `requirements.txt` dosyasında listelenmiştir.
+
+## Kurulum
+Gerekli kütüphaneleri yüklemek için proje kök dizininde aşağıdaki komutu çalıştırın:
+```bash
+pip install -r requirements.txt
+```
 
 ## Nasıl Çalıştırılır
-Gerekli kütüphaneleri yükleyin: pip install torch torchvision numpy  
-Kodu bir Python dosyasına kaydedin (örn. mnist.py)  
-Kodu çalıştırın: python mnist.py  
-Kod, MNIST veri setini indirecek, modeli eğitecek ve mnist_model.pth dosyasına kaydedecektir.  
-Eğittiğiniz modeli kullanmak için (test.py) dosyasındaki kodu kullanıp kendi örneklerinizi test edebilirsiniz.  
-Yapmanız gereken (img_path = 'your_image.png') kısmına kendi png dosya yolunuzu eklemektir.  
 
+### 1. Modeli Eğitme
+Modeli eğitmek ve `mnist_model.pth` dosyasını oluşturmak için aşağıdaki komutu çalıştırın:
+```bash
+python Eğitim.py
+```
+Bu komut, MNIST veri setini indirecek, modeli 20 epoch boyunca eğitecek ve eğitilmiş modelin ağırlıklarını kaydedecektir.
 
-## Öneriler
-Yüklediğiniz resim dosyasında rakamın arka planının temiz ve beyaz olmasına,  
-Rakam harici birşeyin bulunmamasına,  
-Kenar boşluklarının yeterince bırakılmış olmasına dikkat edin lütfen.  
-Her .py dosyasının sonunda Windows işletim sistemine özel bir kısım vardır.  
-Linux kullanıcıları o kısmı silebilir.  
-Performans ayarlarını kendi donanımınıza göre ayarlayabilirsiniz.  
+### 2. Kendi Görselinizi Test Etme
+Eğitilmiş modeli kullanarak kendi rakam görselinizi test etmek için `test.py` betiğini kullanabilirsiniz. Komut satırından test etmek istediğiniz görselin yolunu belirtmeniz yeterlidir:
+```bash
+python test.py <path_to_your_image.png>
+```
+Örneğin:
+```bash
+python test.py testPhotos/test_digit_3.png
+```
+Betiği çalıştırdığınızda, modelin tahmini komut satırına yazdırılacak ve görselin kendisi bir `matplotlib` penceresinde gösterilecektir.
 
+## Test Görselleri İçin Öneriler
+- Yüklediğiniz resim dosyasında rakamın arka planının temiz ve **beyaz** olmasına dikkat edin.
+- Görselde rakam dışında bir nesne bulunmamalıdır.
+- Rakamın etrafında yeterince kenar boşluğu bırakılmış olmalıdır.
+
+**Not:** Kod, beyaz arka plan üzerine siyah rakamlı görsellerle en iyi sonucu verecek şekilde ayarlanmıştır. Eğer farklı formatta bir görsel kullanıyorsanız, `test.py` dosyasındaki görüntü işleme adımlarını düzenlemeniz gerekebilir.
