@@ -4,28 +4,8 @@ from torch import nn, optim
 from torchvision import datasets, transforms
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from model import MYNet
 
-# Modelimizi tanımlıyoruz(3 katmalı modele geçildi)
-class MYNet(nn.Module):
-    def __init__(self):
-        super(MYNet, self).__init__()
-        self.conv = nn.Conv2d(1, 32, 3, padding=1)
-        self.conv1 = nn.Conv2d(32, 64, 3, padding=1)
-        self.conv2 = nn.Conv2d(64, 128, 3, padding=1)
-        self.fc1 = nn.Linear(128 * 3 * 3, 512)  # Boyutu 128 * 3 * 3 olarak güncellendi
-        self.fc2 = nn.Linear(512, 10)
-        self.dropout = nn.Dropout(0.5)
-
-    def forward(self, x):
-        x = F.relu(F.max_pool2d(self.conv(x), 2))  # Boyut: (batch_size, 32, 14, 14)
-        x = F.relu(F.max_pool2d(self.conv1(x), 2))  # Boyut: (batch_size, 64, 7, 7)
-        x = F.relu(F.max_pool2d(self.conv2(x), 2))  # Boyut: (batch_size, 128, 3, 3)
-
-        x = x.view(-1, 128 * 3 * 3)  # Düzleştir
-        x = F.relu(self.fc1(x))
-        x = self.dropout(x)
-        x = self.fc2(x)
-        return F.log_softmax(x, dim=1)
 
 # Eğitim fonksiyonu
 def train(model, device, train_loader, optimizer, epoch):
@@ -101,4 +81,5 @@ if __name__ == '__main__':
     from multiprocessing import freeze_support
     freeze_support()
     main()
+
 
